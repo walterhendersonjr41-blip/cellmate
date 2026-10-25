@@ -17,27 +17,43 @@
     opts = opts || {}; opts.signal = c.signal;
     return fetch(url, opts).finally(function () { clearTimeout(to); });
   }
-  /* ask(system, user | messages[]) -> Promise<string>; rejects if the AI is busy. */
+  /* The free (anonymous) Pollinations tier allows 1 reply every 30 seconds per IP. All of these apps share
+     one origin, so they share one clock in localStorage and wait their turn instead of getting refused. */
+  var GAP = 30500, NEXT = 'pollinations.next';
+  function nextAt() { try { return +localStorage.getItem(NEXT) || 0; } catch (e) { return window.__aihNext || 0; } }
+  function setNext(t) { window.__aihNext = t; try { localStorage.setItem(NEXT, String(t)); } catch (e) { } }
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  async function waitTurn(onWait) {
+    for (;;) {
+      var left = nextAt() - Date.now();
+      if (left <= 0) return;
+      if (onWait) try { onWait(Math.ceil(left / 1000)); } catch (e) { }
+      await sleep(Math.min(1000, left));
+    }
+  }
+  /* Seconds until the free AI can answer again (0 = now). */
+  function waitSeconds() { return Math.max(0, Math.ceil((nextAt() - Date.now()) / 1000)); }
+  /* ask(system, user | messages[], {json, raw, onRetry, onWait(sec)}) -> Promise<string>; rejects if the AI is busy. */
   async function ask(system, user, opt) {
     opt = opt || {};
     var msgs = Array.isArray(user) ? user.slice() : [{ role: 'user', content: String(user) }];
     msgs.unshift({ role: 'system', content: String(system || '') });
     var body = { model: 'openai', messages: msgs, private: true, referrer: REF, reasoning_effort: 'low' };
     if (opt.json) body.response_format = { type: 'json_object' };
-    var waits = [3000, 8000, 0];
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 4; i++) {
+      await waitTurn(opt.onWait);
+      setNext(Date.now() + GAP);
       try {
-        var r = await timed('https://text.pollinations.ai/openai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }, 45000);
+        var r = await timed('https://text.pollinations.ai/openai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }, 60000);
         if (r.ok) { var d = await r.json(); var c = d && d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content; if (c) return opt.raw ? c : clean(c); }
+        else if (r.status === 402 || r.status === 429) {
+          var t = ''; try { t = await r.text(); } catch (e) { }
+          var m = /retry after (\d+)/i.exec(t) || [0, r.headers.get('retry-after') || 30];
+          setNext(Date.now() + (Math.min(+m[1] || 30, 90) + 1) * 1000);
+        }
       } catch (e) { }
       if (opt.onRetry) try { opt.onRetry(i + 1); } catch (e) { }
-      await new Promise(function (res) { setTimeout(res, waits[i]); });
     }
-    try {
-      var convo = msgs.filter(function (m) { return m.role !== 'system'; }).slice(-6).map(function (m) { return (m.role === 'assistant' ? 'Assistant: ' : 'User: ') + m.content; }).join('\n').slice(-1500);
-      var r2 = await timed('https://text.pollinations.ai/' + encodeURIComponent(convo) + '?model=openai&private=true&referrer=' + REF + '&system=' + encodeURIComponent(String(system).slice(0, 2000)), {}, 35000);
-      if (r2.ok) { var t = (await r2.text()).trim(); if (t && t[0] !== '{') return opt.raw ? t : clean(t); }
-    } catch (e) { }
     throw new Error('busy');
   }
   function parseJSON(t) {
@@ -95,8 +111,8 @@
       (ctx ? '\n\nWhat is on the app screen right now (for context):\n' + ctx : '');
     history.push({ role: 'user', content: text });
     try {
-      var slow = setTimeout(function () { w.textContent = 'Thinking… (the free AI is busy, waiting in line)'; }, 12000);
-      var reply = await ask(sys, history.slice(-8)).finally(function () { clearTimeout(slow); });
+      var slow = setTimeout(function () { w.textContent = 'Thinking… (the free AI is busy, waiting in line)'; }, 15000);
+      var reply = await ask(sys, history.slice(-8), { onWait: function (sec) { w.textContent = 'Free AI answers 1 question every 30 seconds. Yours starts in ' + sec + ' s…'; } }).finally(function () { clearTimeout(slow); });
       history.push({ role: 'assistant', content: reply });
       w.textContent = reply;
       var b = document.createElement('button'); b.className = 'mini'; b.textContent = '🔊 Read aloud'; b.onclick = function () { speak(reply); };
@@ -139,5 +155,5 @@
     input.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(input.value); } });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.classList.contains('open')) close(); });
   }
-  window.AIHelper = { init: init, ask: ask, open: open, close: close, send: send, clean: clean, parseJSON: parseJSON, speak: speak };
+  window.AIHelper = { init: init, ask: ask, waitSeconds: waitSeconds, open: open, close: close, send: send, clean: clean, parseJSON: parseJSON, speak: speak };
 })();

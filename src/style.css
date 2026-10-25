@@ -13,8 +13,8 @@ nav a{margin:0 12px;color:var(--muted)}nav a:hover{color:var(--txt)}
 .eyebrow{color:var(--acc2);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px}
 h1{font-size:clamp(34px,5vw,58px);line-height:1.05;margin:10px 0}h1 em{font-style:normal;background:linear-gradient(90deg,var(--acc2),var(--acc));-webkit-background-clip:text;color:transparent}
 .lede{font-size:19px;color:#c3c9da;max-width:760px;line-height:1.5}.row{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
-.demo{display:grid;grid-template-columns:1fr 400px;gap:40px;padding:40px 5vw;align-items:start}
-@media(max-width:900px){.demo{grid-template-columns:1fr}.phone-wrap{order:-1}nav{display:none}}
+.work{display:grid;grid-template-columns:1fr 400px;gap:40px;padding:40px 5vw;align-items:start}
+@media(max-width:900px){.work{grid-template-columns:1fr}.phone-wrap{order:-1}nav{display:none}}
 .console{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px}
 .console h2{margin:0 0 4px}.muted{color:var(--muted)}.center{text-align:center}
 .presets{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:16px 0}
@@ -84,4 +84,22 @@ h1{font-size:clamp(34px,5vw,58px);line-height:1.05;margin:10px 0}h1 em{font-styl
 .who{margin-top:30px}.who li{margin:8px 0;color:#c3c9da}
 .price .amt{font-size:40px;font-weight:800;margin:10px 0}.price .amt span{font-size:16px;color:var(--muted)}.price.hot{border-color:var(--acc);box-shadow:0 0 40px #7c5cff33}
 footer{padding:30px;text-align:center;color:var(--muted);border-top:1px solid var(--line)}
-@media(max-width:420px){.phone{transform:scale(.88);transform-origin:top center;margin-bottom:-88px}.demo{padding:20px 4vw}}
+@media(max-width:420px){.phone{transform:scale(.88);transform-origin:top center;margin-bottom:-88px}.work{padding:20px 4vw}}
+/* real helper */
+.taskform{flex-direction:column}.locrow{display:flex;gap:8px}.locrow input{flex:1;background:#0f1320;border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--txt);font-size:15px}
+.taskform .cta{font-size:17px;padding:14px}
+.report h4{margin:14px 0 6px}.report pre{white-space:pre-wrap;background:#0f1320;border:1px solid var(--line);border-radius:10px;padding:10px;font:14px/1.45 inherit;margin:0}
+.biz{background:#0f1320;border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0}.biz .nm{font-weight:700}.biz .sub{color:var(--muted);font-size:13px}
+.biz .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.biz .acts a,.biz .acts button,.btnrow a,.btnrow button{background:#1b2033;border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:9px 12px;font-size:14px;cursor:pointer;min-height:40px;display:inline-flex;align-items:center}
+.biz .acts a.call{background:#16a34a;border-color:#16a34a}.biz.best{border-color:var(--ok)}
+.qrow{display:flex;gap:6px;margin-top:8px}.qrow input{background:#141826;border:1px solid var(--line);border-radius:8px;color:var(--txt);padding:8px;min-width:0;font-size:14px}.qrow input.q{width:90px}.qrow input.n{flex:1}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.history{margin-top:14px}.history .hj{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px}.history button{background:none;border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:6px 10px;cursor:pointer}
+.view form{display:flex;flex-direction:column;gap:8px;padding:0 14px 10px}.view input,.view textarea{border:1px solid #ccc;border-radius:10px;padding:9px;font-size:15px;font-family:inherit}
+.view .pbtn{background:#2563eb;color:#fff;border:0;border-radius:10px;padding:10px;font-size:15px;cursor:pointer;text-align:center;display:block}
+.listi a{color:#2563eb;font-weight:600}.listi .ra{display:flex;gap:10px;font-size:18px}
+.keypad .callbtn{text-decoration:none;cursor:pointer}.key{cursor:pointer;user-select:none}
+.map iframe{width:100%;height:100%;border:0}
+.cam img{max-width:100%;max-height:100%}
+.empty{color:#777;padding:10px;font-size:14px}
+@media(max-width:420px){.phone{width:330px;height:680px}.qrow{flex-wrap:wrap}}
