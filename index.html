@@ -7,6 +7,7 @@
 <meta name="description" content="CellMate is an AI worker that owns a real phone: it calls, texts, snaps photos, maps routes and books your calendar so you don't have to." />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>" />
 <link rel="stylesheet" href="./src/style.css" />
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f172a"><link rel="apple-touch-icon" href="icons/icon-192.png">
 </head>
 <body>
 <header class="top">
@@ -27,7 +28,7 @@
 <section id="demo" class="demo">
   <div class="console">
     <h2>Give your agent a job</h2>
-    <p class="muted">Pick a job or type your own. Watch the agent use its phone on the right.</p>
+    <p class="muted">Pick a job or type your own. Watch the agent use its phone on the right. <b>Sample run:</b> this phone is a simulation and no real calls or texts are made. For real scripts you can use today, tap ✨ Script writer.</p>
     <div id="presets" class="presets"></div>
     <form id="taskForm" class="taskform">
       <input id="taskInput" placeholder="e.g. Call plumbers near Chattanooga and book the cheapest for tomorrow" autocomplete="off" />
@@ -82,5 +83,8 @@
 
 <footer>CellMate · Built with Bolt for Builders Week 2026 · Demo uses simulated calls &amp; texts.</footer>
 <script type="module" src="./src/main.js"></script>
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
+<script src="ai-helper.js"></script>
+<script>AIHelper.init({"referrer": "cellmate", "title": "📱 Script writer", "color": "#2563eb", "greeting": "Give me a phone job (call movers for quotes, reschedule an appointment, follow up with a customer) and I'll write the exact call script and text messages you can use today.", "system": "You write practical phone call scripts and text messages for small-business tasks. For each job give: a short opening line, the key questions to ask, what to say if they push back, how to close, and a ready-to-send follow-up text. Keep it natural and short. Never pretend to be a human if asked; scripts should be honest.", "note": "", "chips": [["Get 3 mover quotes", "Write a call script to get moving quotes from 3 local movers for a 2-bedroom apartment on Saturday."], ["Remind tomorrow's customers", "Write a friendly text reminding a customer of their appointment tomorrow at 10 AM, with an easy way to reschedule."], ["Chase an unpaid invoice", "Write a polite but firm call script and follow-up text for an invoice that's 30 days late."]]});</script>
 </body>
 </html>
