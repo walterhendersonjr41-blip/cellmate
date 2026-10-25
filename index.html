@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CellMate — Hire an AI worker with its own phone</title>
+<meta name="description" content="CellMate is an AI worker that owns a real phone: it calls, texts, snaps photos, maps routes and books your calendar so you don't have to." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>" />
+<link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo">📱</span> CellMate</div>
+  <nav><a href="#demo">Live demo</a><a href="#how">How it works</a><a href="#pricing">Pricing</a></nav>
+  <a class="cta small" href="#demo">Hire your first agent</a>
+</header>
+
+<section class="hero">
+  <div>
+    <p class="eyebrow">AI worker · its own phone · its own number</p>
+    <h1>Hire an AI worker that has its <em>own cell phone</em>.</h1>
+    <p class="lede">Not a chatbot. Not just a phone number. CellMate gets a full phone with apps — Phone, Messages, Camera, Maps, Contacts, Browser and Calendar — and does the calling, texting and booking for your business.</p>
+    <div class="row"><a class="cta" href="#demo">Watch it work ▶</a><a class="ghost" href="#pricing">$49/mo per agent</a></div>
+  </div>
+</section>
+
+<section id="demo" class="demo">
+  <div class="console">
+    <h2>Give your agent a job</h2>
+    <p class="muted">Pick a job or type your own. Watch the agent use its phone on the right.</p>
+    <div id="presets" class="presets"></div>
+    <form id="taskForm" class="taskform">
+      <input id="taskInput" placeholder="e.g. Call plumbers near Chattanooga and book the cheapest for tomorrow" autocomplete="off" />
+      <button class="cta" type="submit">Run</button>
+    </form>
+    <div class="speed"><label><input type="checkbox" id="fast" /> Fast mode</label><button id="resetBtn" class="ghost tiny" type="button">Reset phone</button></div>
+    <h3>Agent log</h3>
+    <ol id="log" class="log"><li class="muted">Waiting for a job…</li></ol>
+    <div id="report" class="report hidden"></div>
+  </div>
+
+  <div class="phone-wrap">
+    <div class="phone" id="phone">
+      <div class="notch"></div>
+      <div class="status"><span id="clock">9:41</span><span>5G ▮▮▮ 🔋</span></div>
+      <div class="screen" id="screen"></div>
+      <div id="toast" class="toast hidden"></div>
+      <div class="homebar" id="homebar"></div>
+    </div>
+    <div class="owner">Agent line: <b>(423) 555-0142</b> · owned by your CellMate</div>
+  </div>
+</section>
+
+<section id="how" class="how">
+  <h2>How it works</h2>
+  <div class="cards">
+    <div class="card"><b>1. Hire</b><p>Spin up an agent in a minute. It gets its own phone number and a full phone with apps.</p></div>
+    <div class="card"><b>2. Hand it a job</b><p>"Call five movers and get quotes." "Text my leads back." "Book the cheapest plumber for tomorrow."</p></div>
+    <div class="card"><b>3. It works the phone</b><p>It dials, talks, texts, checks maps, snaps proof photos and puts the result on your calendar.</p></div>
+    <div class="card"><b>4. You get the report</b><p>Every call transcript, text and booking is logged. You approve anything that costs money.</p></div>
+  </div>
+  <div class="who">
+    <h3>Built for people who live on the phone</h3>
+    <ul>
+      <li>🔧 Contractors &amp; home services — answer and return every call</li>
+      <li>🚚 Small fleets &amp; movers — quotes, dispatch, follow-ups</li>
+      <li>🏠 Landlords &amp; property managers — showings and repair calls</li>
+      <li>🛒 Resellers — call storage units, pawn shops and sellers for deals</li>
+    </ul>
+  </div>
+</section>
+
+<section id="pricing" class="pricing">
+  <h2>Simple pricing</h2>
+  <div class="cards">
+    <div class="card price"><b>Starter</b><div class="amt">$49<span>/mo</span></div><p>1 agent, 1 phone line, 300 call minutes, unlimited texts.</p></div>
+    <div class="card price hot"><b>Crew</b><div class="amt">$149<span>/mo</span></div><p>4 agents, 4 lines, 1,500 minutes, shared contacts &amp; calendar.</p></div>
+    <div class="card price"><b>Fleet</b><div class="amt">Custom</div><p>Dozens of agent phones, your own numbers, CRM hookups.</p></div>
+  </div>
+  <p class="muted center">Safety first: agents always say they're an AI, never spend money without your OK, and every call is logged.</p>
+</section>
+
+<footer>CellMate · Built with Bolt for Builders Week 2026 · Demo uses simulated calls &amp; texts.</footer>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
